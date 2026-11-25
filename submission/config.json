@@ -1,0 +1,13 @@
+{
+  "enable_extra": true,
+  "enable_llm": true,
+  "probe": true,
+  "feedback": true,
+  "feedback_priority": 1.2,
+  "confident": 1.0,
+  "risk_threshold": 1.5,
+  "vote_weight": 0.75,
+  "header_weight": 1.5,
+  "pass_floor": 0.0,
+  "budget_mode": "binding"
+}

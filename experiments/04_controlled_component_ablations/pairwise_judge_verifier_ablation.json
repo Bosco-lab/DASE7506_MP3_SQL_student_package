@@ -1,0 +1,60 @@
+{
+  "n": 480,
+  "baseline": 411,
+  "correct": 413,
+  "switches": 17,
+  "gains": 2,
+  "losses": 0,
+  "prediction_seconds": 23.8485398000048,
+  "score_seconds": 0.1168279999983497,
+  "modes": {
+    "verifier": 178
+  },
+  "max_charged": 6,
+  "max_new_tokens": 0,
+  "inference_seconds": 9.251635499997064,
+  "judge_switches": 17,
+  "audit_tasks": 178,
+  "folds": [
+    {
+      "n": 98,
+      "baseline": 84,
+      "correct": 85,
+      "switches": 5,
+      "gains": 1,
+      "losses": 0
+    },
+    {
+      "n": 94,
+      "baseline": 75,
+      "correct": 75,
+      "switches": 1,
+      "gains": 0,
+      "losses": 0
+    },
+    {
+      "n": 94,
+      "baseline": 87,
+      "correct": 87,
+      "switches": 3,
+      "gains": 0,
+      "losses": 0
+    },
+    {
+      "n": 97,
+      "baseline": 78,
+      "correct": 79,
+      "switches": 5,
+      "gains": 1,
+      "losses": 0
+    },
+    {
+      "n": 97,
+      "baseline": 87,
+      "correct": 87,
+      "switches": 3,
+      "gains": 0,
+      "losses": 0
+    }
+  ]
+}

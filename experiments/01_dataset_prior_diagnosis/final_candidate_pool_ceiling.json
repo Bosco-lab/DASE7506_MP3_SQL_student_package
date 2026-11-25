@@ -1,0 +1,635 @@
+{
+  "elapsed_seconds": 389.05,
+  "train": {
+    "split": "train",
+    "total": 480,
+    "correct": 467,
+    "observed_buckets": {
+      "correct": 467,
+      "public_only": 10,
+      "no_public_match": 3
+    },
+    "empty_total": 119,
+    "empty_buckets": {
+      "correct": 115,
+      "no_public_match": 1,
+      "public_only": 3
+    },
+    "nonempty_total": 361,
+    "nonempty_buckets": {
+      "correct": 352,
+      "public_only": 7,
+      "no_public_match": 2
+    },
+    "empty_rival_pairs": 2898,
+    "empty_tasks_with_rival_pairs": 86,
+    "failed_empty_details": [
+      {
+        "id": "train-b84fb522b942b8cf",
+        "split": "train",
+        "db_id": "train_station",
+        "question": "Find the names of the trains that do not pass any station located in London.",
+        "issue_sql": "SELECT train.Name\nFROM train\nWHERE train.Time IS NULL OR train.Service IS NULL\nAND train.Station_ID IN (\n    SELECT Station_ID\n    FROM train_station\n    WHERE Location = 'London'\n);",
+        "selected_sql": "SELECT \"train\".\"name\" FROM train WHERE NOT EXISTS(SELECT 1 FROM train_station JOIN station ON train_station.Station_ID = station.Station_ID WHERE train_station.Train_ID = train.Train_ID AND station.Location = 'London')",
+        "tool_calls": 8,
+        "selected_passed_public": false,
+        "bucket": "no_public_match",
+        "correct_in_trace": false,
+        "correct_in_expanded_pool": false,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT train.Name FROM train JOIN train_station ON train.Train_ID = train_station.Train_ID JOIN station ON train_station.Station_ID = station.Station_ID WHERE train.Time IS NULL OR train.Service IS NULL AND station.Station_ID IN (SELECT Station_ID FROM train_station WHERE Location = 'London')",
+            "sql_key": "SELECT train.Name FROM train JOIN train_station ON train.Train_ID = train_station.Train_ID JOIN station ON train_station.Station_ID = station.Station_ID WHERE train.Time IS NULL OR train.Service IS NULL AND station.Station_ID IN (SELECT Station_ID FROM train_station WHERE Location = 'London')",
+            "vote_key": "SELECT train.Name FROM train JOIN train_station ON train.Train_ID = train_station.Train_ID JOIN station ON train_station.Station_ID = station.Station_ID WHERE train.Time IS NULL OR train.Service IS NULL AND station.Station_ID IN (SELECT Station_ID FROM train_station WHERE Location = 'London')",
+            "sources": [
+              "pool:pool_fk_join_issue"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      },
+      {
+        "id": "train-4133b076bc478ebc",
+        "split": "train",
+        "db_id": "tracking_grants_for_research",
+        "question": "What are the staff roles of the staff who",
+        "issue_sql": "SELECT Staff_Roles.role_code FROM Staff_Roles, Projects, Project_Outcomes, Research_Outcomes, Research_Staff, Staff_Roles, Projects, Project_Outcomes, Research_Outcomes, Research_Staff, Staff_Roles\nWHERE Projects.project_id = Research_Staff.project_id\n  AND Projects.project_id = Staff_Roles.project_id\n  AND Project_Outcomes.outcome_code = Research_Staff.outcome_code\n  AND Project_Outcomes.outcome_code = Staff_Roles.outcome_code\n  AND Staff_Roles.role_code = Research_Staff.role_code;",
+        "selected_sql": "SELECT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code",
+        "tool_calls": 5,
+        "selected_passed_public": true,
+        "bucket": "public_only",
+        "correct_in_trace": false,
+        "correct_in_expanded_pool": false,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code",
+            "sql_key": "SELECT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code",
+            "vote_key": "SELECT staff_roles.role_code FROM staff_roles JOIN project_staff ON staff_roles.role_code = project_staff.role_code JOIN research_staff ON project_staff.staff_id = research_staff.staff_id JOIN project_outcomes ON project_staff.project_id = project_outcomes.project_id JOIN research_outcomes ON project_outcomes.outcome_code = research_outcomes.outcome_code",
+            "sources": [
+              "submitted",
+              "trace_check",
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT Staff_Roles.role_code\nFROM Staff_Roles\nJOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code\nJOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id\nJOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id\nJOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code;",
+            "sql_key": "SELECT DISTINCT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code",
+            "vote_key": "SELECT DISTINCT staff_roles.role_code FROM staff_roles JOIN project_staff ON staff_roles.role_code = project_staff.role_code JOIN research_staff ON project_staff.staff_id = research_staff.staff_id JOIN project_outcomes ON project_staff.project_id = project_outcomes.project_id JOIN research_outcomes ON project_outcomes.outcome_code = research_outcomes.outcome_code",
+            "sources": [
+              "trace_check",
+              "repair_hint",
+              "pool:hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id",
+            "sql_key": "SELECT DISTINCT Staff_Roles.role_code FROM Staff_Roles JOIN Project_Staff ON Staff_Roles.role_code = Project_Staff.role_code JOIN Research_Staff ON Project_Staff.staff_id = Research_Staff.staff_id JOIN Project_Outcomes ON Project_Staff.project_id = Project_Outcomes.project_id",
+            "vote_key": "SELECT DISTINCT staff_roles.role_code FROM staff_roles JOIN project_staff ON staff_roles.role_code = project_staff.role_code JOIN research_staff ON project_staff.staff_id = research_staff.staff_id JOIN project_outcomes ON project_staff.project_id = project_outcomes.project_id",
+            "sources": [
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      },
+      {
+        "id": "train-5d25a4ac6a798445",
+        "split": "train",
+        "db_id": "twitter_1",
+        "question": "Find the name and email for the users who have more than one follower.",
+        "issue_sql": "SELECT name, email\nFROM user_profiles\nWHERE followers > 1;",
+        "selected_sql": "SELECT up.name, up.email\nFROM user_profiles up\nJOIN follows f ON up.uid = f.f2\nGROUP BY up.uid\nHAVING COUNT(f.f1) > 1;",
+        "tool_calls": 4,
+        "selected_passed_public": true,
+        "bucket": "public_only",
+        "correct_in_trace": false,
+        "correct_in_expanded_pool": true,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT up.name, up.email\nFROM user_profiles up\nJOIN follows f ON up.uid = f.f2\nGROUP BY up.uid\nHAVING COUNT(f.f1) > 1;",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "submitted",
+              "trace_check",
+              "repair_hint",
+              "pool:hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid",
+            "sources": [
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "sql_key": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT DISTINCT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "pool:pool_simp_hint0",
+              "extra:goal_distinct"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2",
+            "sources": [
+              "pool:pool_simp2_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid",
+            "sql_key": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid",
+            "vote_key": "SELECT DISTINCT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid",
+            "sources": [
+              "pool:pool_simp2_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(f.f1) >= 1",
+            "sql_key": "SELECT DISTINCT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(f.f1) >= 1",
+            "vote_key": "SELECT DISTINCT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid HAVING COUNT(follows.f1) >= 1",
+            "sources": [
+              "pool:pool_simp2_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(*) > 1",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.uid HAVING COUNT(*) > 1",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.uid HAVING COUNT(*) > 1",
+            "sources": [
+              "extra:goal_group_count"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.name, up.email HAVING COUNT(*) > 1",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.name, up.email HAVING COUNT(*) > 1",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.name, user_profiles.email HAVING COUNT(*) > 1",
+            "sources": [
+              "extra:goal_group_count"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.name, up.email HAVING COUNT(f.f1) > 1",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 GROUP BY up.name, up.email HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 GROUP BY user_profiles.name, user_profiles.email HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "extra:goal_group"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"up\".\"name\", \"up\".\"email\" FROM user_profiles AS up JOIN follows AS f ON \"f\".\"f2\" = \"up\".\"uid\" GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "sql_key": "SELECT \"up\".\"name\", \"up\".\"email\" FROM user_profiles AS up JOIN follows AS f ON \"f\".\"f2\" = \"up\".\"uid\" GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT user_profiles.\"name\", user_profiles.\"email\" FROM user_profiles JOIN follows ON follows.\"f2\" = user_profiles.\"uid\" GROUP BY user_profiles.uid HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "extra:goal_fk_join"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"up\".\"name\", \"up\".\"email\" FROM user_profiles AS up JOIN follows AS f ON \"f\".\"f1\" = \"up\".\"uid\" GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "sql_key": "SELECT \"up\".\"name\", \"up\".\"email\" FROM user_profiles AS up JOIN follows AS f ON \"f\".\"f1\" = \"up\".\"uid\" GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT user_profiles.\"name\", user_profiles.\"email\" FROM user_profiles JOIN follows ON follows.\"f1\" = user_profiles.\"uid\" GROUP BY user_profiles.uid HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "extra:goal_fk_join"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 WHERE followers > 1 GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "sql_key": "SELECT up.name, up.email FROM user_profiles AS up JOIN follows AS f ON up.uid = f.f2 WHERE followers > 1 GROUP BY up.uid HAVING COUNT(f.f1) > 1",
+            "vote_key": "SELECT user_profiles.name, user_profiles.email FROM user_profiles JOIN follows ON user_profiles.uid = follows.f2 WHERE followers > 1 GROUP BY user_profiles.uid HAVING COUNT(follows.f1) > 1",
+            "sources": [
+              "extra:goal_splice"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      },
+      {
+        "id": "train-fe5f1350463bb4e6",
+        "split": "train",
+        "db_id": "csu_1",
+        "question": "What are the campuses that had between 600 and 1000 faculty members in 2004?",
+        "issue_sql": "SELECT Campuses.Id\nFROM Campuses\nJOIN csu_fees ON Campuses.Id = csu_fees.Campus\nJOIN faculty ON Campuses.Id = faculty.Campus\nWHERE Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000;",
+        "selected_sql": "SELECT \"Campuses\".\"Campus\" FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+        "tool_calls": 5,
+        "selected_passed_public": true,
+        "bucket": "public_only",
+        "correct_in_trace": false,
+        "correct_in_expanded_pool": true,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT \"Campuses\".\"Campus\" FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "sql_key": "SELECT \"Campuses\".\"Campus\" FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.\"Campus\" FROM campuses JOIN faculty ON campuses.id = faculty.campus WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "submitted",
+              "trace_check"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT Campuses.Id AS Campus\nFROM Campuses\nJOIN faculty ON Campuses.Id = faculty.Campus\nWHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000;",
+            "sql_key": "SELECT Campuses.Id AS Campus FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.id AS campus FROM campuses JOIN faculty ON campuses.id = faculty.campus WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "trace_check",
+              "repair_hint",
+              "pool:hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT Campuses.Id AS Campus FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "sql_key": "SELECT DISTINCT Campuses.Id AS Campus FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "vote_key": "SELECT DISTINCT campuses.id AS campus FROM campuses JOIN faculty ON campuses.id = faculty.campus WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE Campuses.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "sql_key": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE Campuses.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.id FROM campuses JOIN csu_fees ON campuses.id = csu_fees.campus JOIN faculty ON campuses.id = faculty.campus WHERE campuses.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "pool:pool_schema_fix_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE csu_fees.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "sql_key": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE csu_fees.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.id FROM campuses JOIN csu_fees ON campuses.id = csu_fees.campus JOIN faculty ON campuses.id = faculty.campus WHERE csu_fees.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "pool:pool_schema_fix_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "sql_key": "SELECT Campuses.Id FROM Campuses JOIN csu_fees ON Campuses.Id = csu_fees.Campus JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND Faculty.Faculty >= 600 AND Faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.id FROM campuses JOIN csu_fees ON campuses.id = csu_fees.campus JOIN faculty ON campuses.id = faculty.campus WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "pool:pool_schema_fix_issue"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"faculty\".\"Campus\" FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "sql_key": "SELECT \"faculty\".\"Campus\" FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "vote_key": "SELECT faculty.\"Campus\" FROM campuses JOIN faculty ON campuses.id = faculty.campus WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "extra:goal_projection"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"faculty\".\"Campus\" FROM faculty WHERE \"faculty\".\"Year\" = 2004 AND \"faculty\".\"Faculty\" >= 600 AND \"faculty\".\"Faculty\" <= 1000",
+            "sql_key": "SELECT \"faculty\".\"Campus\" FROM faculty WHERE \"faculty\".\"Year\" = 2004 AND \"faculty\".\"Faculty\" >= 600 AND \"faculty\".\"Faculty\" <= 1000",
+            "vote_key": "SELECT \"Campus\" FROM faculty WHERE \"Year\" = 2004 AND \"Faculty\" >= 600 AND \"Faculty\" <= 1000",
+            "sources": [
+              "extra:goal_single_table"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"Campuses\".\"Campus\" FROM Campuses JOIN faculty ON \"faculty\".\"Campus\" = \"Campuses\".\"Id\" WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "sql_key": "SELECT \"Campuses\".\"Campus\" FROM Campuses JOIN faculty ON \"faculty\".\"Campus\" = \"Campuses\".\"Id\" WHERE faculty.Year = 2004 AND faculty.Faculty >= 600 AND faculty.Faculty <= 1000",
+            "vote_key": "SELECT campuses.\"Campus\" FROM campuses JOIN faculty ON faculty.\"Campus\" = campuses.\"Id\" WHERE faculty.year = 2004 AND faculty.faculty >= 600 AND faculty.faculty <= 1000",
+            "sources": [
+              "extra:goal_fk_join"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "split": "validation",
+    "total": 120,
+    "correct": 118,
+    "observed_buckets": {
+      "correct": 118,
+      "selection_available": 1,
+      "public_only": 1
+    },
+    "empty_total": 33,
+    "empty_buckets": {
+      "correct": 31,
+      "selection_available": 1,
+      "public_only": 1
+    },
+    "nonempty_total": 87,
+    "nonempty_buckets": {
+      "correct": 87
+    },
+    "empty_rival_pairs": 1119,
+    "empty_tasks_with_rival_pairs": 25,
+    "failed_empty_details": [
+      {
+        "id": "validation-3625496ea0b7be64",
+        "split": "validation",
+        "db_id": "local_govt_mdm",
+        "question": "What are the distinct cross reference source system codes which are related to the master customer details 'Gottlieb, Becker and Wyman'?",
+        "issue_sql": "SELECT CMI_Cross_References.source_system_code\nFROM CMI_Cross_References\nJOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id\nJOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id\nJOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Customer_Master_Index.cmi_cross_ref_id\nWHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman';",
+        "selected_sql": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE LOWER(Customer_Master_Index.cmi_details) = LOWER('Gottlieb, Becker and Wyman')",
+        "tool_calls": 8,
+        "selected_passed_public": true,
+        "bucket": "selection_available",
+        "correct_in_trace": true,
+        "correct_in_expanded_pool": true,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE LOWER(Customer_Master_Index.cmi_details) = LOWER('Gottlieb, Becker and Wyman')",
+            "sql_key": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE LOWER(Customer_Master_Index.cmi_details) = LOWER('Gottlieb, Becker and Wyman')",
+            "vote_key": "SELECT DISTINCT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE LOWER(customer_master_index.cmi_details) = LOWER('Gottlieb, Becker and Wyman')",
+            "sources": [
+              "submitted",
+              "trace_check"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT CMI_Cross_References.source_system_code\nFROM CMI_Cross_References\nJOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id\nWHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman';",
+            "sql_key": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT DISTINCT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "trace_check",
+              "repair_hint",
+              "pool:hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT source_system_code FROM CMI_Cross_References WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT DISTINCT source_system_code FROM CMI_Cross_References WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT DISTINCT source_system_code FROM cmi_cross_references WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "trace_check"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT source_system_code FROM CMI_Cross_References WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT source_system_code FROM CMI_Cross_References WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT source_system_code FROM cmi_cross_references WHERE master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "trace_check"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_simp2_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_simp2_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT DISTINCT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT DISTINCT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_simp2_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_schema_fix_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = CMI_Cross_References.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = CMI_Cross_References.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = cmi_cross_references.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_schema_fix_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Benefits_Overpayments.cmi_cross_ref_id JOIN Benefits_Overpayments ON CMI_Cross_References.cmi_cross_ref_id = Benefits_Overpayments.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Benefits_Overpayments.cmi_cross_ref_id JOIN Benefits_Overpayments ON CMI_Cross_References.cmi_cross_ref_id = Benefits_Overpayments.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = benefits_overpayments.cmi_cross_ref_id JOIN benefits_overpayments ON cmi_cross_references.cmi_cross_ref_id = benefits_overpayments.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_fk_join_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Electoral_Register.cmi_cross_ref_id JOIN Electoral_Register ON CMI_Cross_References.cmi_cross_ref_id = Electoral_Register.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Electoral_Register.cmi_cross_ref_id JOIN Electoral_Register ON CMI_Cross_References.cmi_cross_ref_id = Electoral_Register.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = electoral_register.cmi_cross_ref_id JOIN electoral_register ON cmi_cross_references.cmi_cross_ref_id = electoral_register.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_fk_join_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Parking_Fines.cmi_cross_ref_id JOIN Parking_Fines ON CMI_Cross_References.cmi_cross_ref_id = Parking_Fines.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Parking_Fines.cmi_cross_ref_id JOIN Parking_Fines ON CMI_Cross_References.cmi_cross_ref_id = Parking_Fines.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = parking_fines.cmi_cross_ref_id JOIN parking_fines ON cmi_cross_references.cmi_cross_ref_id = parking_fines.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_fk_join_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Rent_Arrears.cmi_cross_ref_id JOIN Rent_Arrears ON CMI_Cross_References.cmi_cross_ref_id = Rent_Arrears.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT CMI_Cross_References.source_system_code FROM CMI_Cross_References JOIN Business_Rates ON CMI_Cross_References.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id JOIN Council_Tax ON CMI_Cross_References.cmi_cross_ref_id = Council_Tax.cmi_cross_ref_id JOIN Customer_Master_Index ON CMI_Cross_References.cmi_cross_ref_id = Rent_Arrears.cmi_cross_ref_id JOIN Rent_Arrears ON CMI_Cross_References.cmi_cross_ref_id = Rent_Arrears.cmi_cross_ref_id WHERE Customer_Master_Index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN business_rates ON cmi_cross_references.cmi_cross_ref_id = business_rates.cmi_cross_ref_id JOIN council_tax ON cmi_cross_references.cmi_cross_ref_id = council_tax.cmi_cross_ref_id JOIN customer_master_index ON cmi_cross_references.cmi_cross_ref_id = rent_arrears.cmi_cross_ref_id JOIN rent_arrears ON cmi_cross_references.cmi_cross_ref_id = rent_arrears.cmi_cross_ref_id WHERE customer_master_index.master_customer_id = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "pool:pool_fk_join_issue"
+            ],
+            "passed_3inst": true,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT \"CMI_Cross_References\".\"source_system_code\" FROM CMI_Cross_References JOIN Customer_Master_Index ON \"Customer_Master_Index\".\"master_customer_id\" = \"CMI_Cross_References\".\"master_customer_id\" WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT DISTINCT \"CMI_Cross_References\".\"source_system_code\" FROM CMI_Cross_References JOIN Customer_Master_Index ON \"Customer_Master_Index\".\"master_customer_id\" = \"CMI_Cross_References\".\"master_customer_id\" WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT DISTINCT cmi_cross_references.\"source_system_code\" FROM cmi_cross_references JOIN customer_master_index ON customer_master_index.\"master_customer_id\" = cmi_cross_references.\"master_customer_id\" WHERE customer_master_index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "extra:goal_fk_join"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"CMI_Cross_References\".source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sql_key": "SELECT \"CMI_Cross_References\".source_system_code FROM CMI_Cross_References JOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id WHERE Customer_Master_Index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "vote_key": "SELECT cmi_cross_references.source_system_code FROM cmi_cross_references JOIN customer_master_index ON cmi_cross_references.master_customer_id = customer_master_index.master_customer_id WHERE customer_master_index.cmi_details = 'Gottlieb, Becker and Wyman'",
+            "sources": [
+              "extra:goal_splice"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      },
+      {
+        "id": "validation-e271aa282462bdf7",
+        "split": "validation",
+        "db_id": "roller_coaster",
+        "question": "What are the country names, area and population which has both roller coasters with speed higher",
+        "issue_sql": "SELECT country.Name, country.Area, country.Population\nFROM country\nJOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID\nWHERE roller_coaster.Speed > '0' AND roller_coaster.Speed IS NOT NULL;",
+        "selected_sql": "SELECT country.Name, country.Area, country.Population\nFROM country\nJOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID\nGROUP BY country.Country_ID\nHAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2;",
+        "tool_calls": 6,
+        "selected_passed_public": true,
+        "bucket": "public_only",
+        "correct_in_trace": false,
+        "correct_in_expanded_pool": false,
+        "public_passing_candidates": [
+          {
+            "sql": "SELECT country.Name, country.Area, country.Population\nFROM country\nJOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID\nGROUP BY country.Country_ID\nHAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2;",
+            "sql_key": "SELECT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "vote_key": "SELECT country.name, country.area, country.population FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id GROUP BY country.country_id HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.speed AS REAL) > 0 THEN roller_coaster.roller_coaster_id END) >= 2",
+            "sources": [
+              "submitted",
+              "trace_check",
+              "repair_hint",
+              "pool:hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT T1.Name, T1.Area, T1.Population FROM country AS T1 JOIN roller_coaster AS T2 ON T1.Country_ID = T2.Country_ID WHERE T2.Speed > T2.Speed",
+            "sql_key": "SELECT T1.Name, T1.Area, T1.Population FROM country AS T1 JOIN roller_coaster AS T2 ON T1.Country_ID = T2.Country_ID WHERE T2.Speed > T2.Speed",
+            "vote_key": "SELECT country.name, country.area, country.population FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id WHERE roller_coaster.speed > roller_coaster.speed",
+            "sources": [
+              "trace_check"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "sql_key": "SELECT DISTINCT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "vote_key": "SELECT DISTINCT country.name, country.area, country.population FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id GROUP BY country.country_id HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.speed AS REAL) > 0 THEN roller_coaster.roller_coaster_id END) >= 2",
+            "sources": [
+              "pool:pool_simp_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT DISTINCT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) >= 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "sql_key": "SELECT DISTINCT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) >= 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "vote_key": "SELECT DISTINCT country.name, country.area, country.population FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id GROUP BY country.country_id HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.speed AS REAL) >= 0 THEN roller_coaster.roller_coaster_id END) >= 2",
+            "sources": [
+              "pool:pool_simp2_hint0"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT \"roller_coaster\".\"Name\", \"country\".\"Area\", \"country\".\"Population\" FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "sql_key": "SELECT \"roller_coaster\".\"Name\", \"country\".\"Area\", \"country\".\"Population\" FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.Speed AS REAL) > 0 THEN roller_coaster.Roller_Coaster_ID END) >= 2",
+            "vote_key": "SELECT roller_coaster.\"Name\", country.\"Area\", country.\"Population\" FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id GROUP BY country.country_id HAVING COUNT(DISTINCT CASE WHEN CAST(roller_coaster.speed AS REAL) > 0 THEN roller_coaster.roller_coaster_id END) >= 2",
+            "sources": [
+              "extra:goal_projection"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          },
+          {
+            "sql": "SELECT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(*) >= 2",
+            "sql_key": "SELECT country.Name, country.Area, country.Population FROM country JOIN roller_coaster ON country.Country_ID = roller_coaster.Country_ID GROUP BY country.Country_ID HAVING COUNT(*) >= 2",
+            "vote_key": "SELECT country.name, country.area, country.population FROM country JOIN roller_coaster ON country.country_id = roller_coaster.country_id GROUP BY country.country_id HAVING COUNT(*) >= 2",
+            "sources": [
+              "extra:goal_group_count"
+            ],
+            "passed_3inst": false,
+            "passed_pub": true
+          }
+        ]
+      }
+    ]
+  },
+  "combined_empty_total": 152,
+  "combined_empty_correct": 146,
+  "combined_empty_failed": 6,
+  "combined_empty_rival_pairs": 4017,
+  "combined_empty_tasks_with_pairs": 111
+}

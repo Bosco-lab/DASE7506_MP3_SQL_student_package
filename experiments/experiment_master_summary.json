@@ -1,0 +1,133 @@
+{
+  "final_agent": "Execution-Guided Neuro-Symbolic SQLite Repair Agent",
+  "public_benchmark_test": {
+    "correct": 200,
+    "n": 240,
+    "accuracy": 83.33333333333333,
+    "mean_tool_calls": 5.195833333333334,
+    "predictions_sha256": "68f7fe905eadf5c68a563d698ef1d171052c8104b007731ddc8059dd3fcc34fe",
+    "file": "../outputs/test-score.json"
+  },
+  "public_validation": {
+    "correct": 118,
+    "n": 120,
+    "accuracy": 98.33333333333333,
+    "mean_tool_calls": 5.2,
+    "predictions_sha256": "633c122fca1b705418db003de0834eae0307ca1caecf3fe4e7d7ef8bda63b8e0",
+    "file": "../outputs/validation-score.json"
+  },
+  "grouped_train_replay": {
+    "correct": 467,
+    "n": 480,
+    "accuracy": 97.29166666666667,
+    "mean_tool_calls": 4.858333333333333,
+    "predictions_sha256": "f134df069e8b971317efb99dc9a7590c3b2b2e30b702684b50cefae19bfe3169",
+    "file": "03_terminal_contract_ablations/stage04_explicit_predicate_agreement_train.json"
+  },
+  "progression_summary": [
+    {
+      "stage": "0. Direct draft baseline",
+      "val": 47,
+      "test": 85,
+      "test_mean_calls": 0.0,
+      "val_file": "02_architecture_progression/00_direct_draft_baseline_val_score.json",
+      "test_file": "02_architecture_progression/00_direct_draft_baseline_test_score.json"
+    },
+    {
+      "stage": "1. Hint verification",
+      "val": 73,
+      "test": 155,
+      "test_mean_calls": 4.98,
+      "val_file": "02_architecture_progression/01_hint_loop_v1_val_score.json",
+      "test_file": "02_architecture_progression/01_hint_loop_v1_test_score.json"
+    },
+    {
+      "stage": "2. Symbolic repair",
+      "val": 99,
+      "test": 174,
+      "test_mean_calls": 5.29,
+      "val_file": "02_architecture_progression/02_symbolic_ast_guard_v2_val_score.json",
+      "test_file": "02_architecture_progression/02_symbolic_ast_guard_v2_test_score.json"
+    },
+    {
+      "stage": "3. Base LLM",
+      "val": 100,
+      "test": 176,
+      "test_mean_calls": 5.3,
+      "val_file": "02_architecture_progression/03_cascade_base_qwen06b_val_score.json",
+      "test_file": "02_architecture_progression/03_cascade_base_qwen06b_test_score.json"
+    },
+    {
+      "stage": "4. LoRA SFT",
+      "val": 104,
+      "test": 182,
+      "test_mean_calls": 5.38,
+      "val_file": "02_architecture_progression/04_cascade_sft_lora_val_score.json",
+      "test_file": "02_architecture_progression/04_cascade_sft_lora_test_score.json"
+    },
+    {
+      "stage": "5. Beam search and retry",
+      "val": 105,
+      "test": 185,
+      "test_mean_calls": 5.55,
+      "val_file": "02_architecture_progression/05_beam_retry_v45a_val_score.json",
+      "test_file": "02_architecture_progression/05_beam_retry_v45a_test_score.json"
+    },
+    {
+      "stage": "6. Cell alignment",
+      "val": 107,
+      "test": 186,
+      "test_mean_calls": 5.56,
+      "val_file": "02_architecture_progression/06_value_probe_cell_align_val_score.json",
+      "test_file": "02_architecture_progression/06_value_probe_cell_align_test_score.json"
+    },
+    {
+      "stage": "7. Pure linear ranker",
+      "val": 96,
+      "test": 181,
+      "test_mean_calls": 4.7,
+      "val_file": "02_architecture_progression/07_pure_linear_ranker_only_val_score.json",
+      "test_file": "02_architecture_progression/07_pure_linear_ranker_only_test_score.json"
+    },
+    {
+      "stage": "8. Hybrid blind jury",
+      "val": 109,
+      "test": 189,
+      "test_mean_calls": 5.06,
+      "val_file": "02_architecture_progression/08_hybrid_blind_jury_val_score.json",
+      "test_file": "02_architecture_progression/08_hybrid_blind_jury_test_score.json"
+    },
+    {
+      "stage": "9. Witness probe",
+      "val": 115,
+      "test": 193,
+      "test_mean_calls": 5.22,
+      "val_file": "02_architecture_progression/09_contrastive_witness_probe_val_score.json",
+      "test_file": "02_architecture_progression/09_contrastive_witness_probe_test_score.json"
+    },
+    {
+      "stage": "10. Quantifier and schema grounding",
+      "val": 116,
+      "test": 197,
+      "test_mean_calls": 5.27,
+      "val_file": "02_architecture_progression/10_quantifier_schema_grounding_val_score.json",
+      "test_file": "02_architecture_progression/10_quantifier_schema_grounding_test_score.json"
+    },
+    {
+      "stage": "11. Relational and projection guards",
+      "val": 118,
+      "test": 200,
+      "test_mean_calls": 5.17,
+      "val_file": "02_architecture_progression/11_relational_projection_guards_val_score.json",
+      "test_file": "02_architecture_progression/11_relational_projection_guards_test_score.json"
+    },
+    {
+      "stage": "12. Final agent",
+      "val": 118,
+      "test": 200,
+      "test_mean_calls": 5.2,
+      "val_file": "../outputs/validation-score.json",
+      "test_file": "../outputs/test-score.json"
+    }
+  ]
+}

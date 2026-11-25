@@ -1,0 +1,190 @@
+{
+  "variants": [
+    {
+      "version": "layer05",
+      "description": "Base milestone: COUNT routing, relational repair, projection rebinding",
+      "val_official": {
+        "correct": 118,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "contract01",
+      "description": "Aggregate output signature reconstruction & join-edit separation",
+      "train_replay": {
+        "correct": 464,
+        "n": 480
+      },
+      "val_replay": {
+        "correct": 118,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "grain02",
+      "description": "Duplicate-elimination vs row-source separation",
+      "train_replay": {
+        "correct": 466,
+        "n": 480
+      },
+      "val_replay": {
+        "correct": 118,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "scope03",
+      "description": "Pre-submission SQLGlot column scope guard",
+      "train_replay": {
+        "correct": 466,
+        "n": 480
+      },
+      "val_replay": {
+        "correct": 118,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "conditions04",
+      "description": "Explicit question-to-WHERE/HAVING constraint agreement (FINAL FROZEN)",
+      "train_replay": {
+        "correct": 467,
+        "n": 480
+      },
+      "val_replay": {
+        "correct": 118,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "issue05",
+      "description": "Supply original draft execution error to blind jury",
+      "train_full_gpu": {
+        "correct": 464,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 116,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "quoted06",
+      "description": "Bind unowned quoted identifiers in model SQL as text literals",
+      "train_full_gpu": {
+        "correct": 462,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 117,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 199,
+        "n": 240
+      }
+    },
+    {
+      "version": "prefill07",
+      "description": "Assistant prefill of uniquely resolved output column list",
+      "train_full_gpu": {
+        "correct": 463,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 117,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "feedback08",
+      "description": "Supply passing candidate and feedback to second-opinion pass",
+      "train_full_gpu": {
+        "correct": 466,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 116,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 200,
+        "n": 240
+      }
+    },
+    {
+      "version": "binding09",
+      "description": "Early schema scheduling on missing column/table with hint consensus",
+      "train_full_gpu": {
+        "correct": 463,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 117,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 198,
+        "n": 240
+      }
+    },
+    {
+      "version": "focus10",
+      "description": "Reorder schema tables by mention priority in prompt",
+      "train_full_gpu": {
+        "correct": 464,
+        "n": 480
+      },
+      "val_official": {
+        "correct": 117,
+        "n": 120
+      },
+      "test_official": {
+        "correct": 199,
+        "n": 240
+      }
+    },
+    {
+      "version": "rebuild01",
+      "description": "FK join rebuild, count grouping & exclusion repairs",
+      "train": 463,
+      "val_official": 118,
+      "test_official": 199
+    },
+    {
+      "version": "relation02",
+      "description": "Terminal relation repair overlay over rebuild01",
+      "train": 465,
+      "val_official": 118,
+      "test_official": 199
+    }
+  ]
+}

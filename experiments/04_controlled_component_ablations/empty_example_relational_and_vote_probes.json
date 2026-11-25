@@ -1,0 +1,39 @@
+{
+  "elapsed_seconds": 3.63,
+  "rival_pairs_total": 4017,
+  "pairwise": {
+    "3a_strip_all_where": {
+      "wins": 20,
+      "losses": 40,
+      "precision": 0.3333,
+      "net": -20
+    },
+    "3a_strip_literal_atoms": {
+      "wins": 32,
+      "losses": 40,
+      "precision": 0.4444,
+      "net": -8
+    },
+    "3a_not_in_null": {
+      "wins": 0,
+      "losses": 0,
+      "precision": 0.0,
+      "net": 0
+    }
+  },
+  "e2e_3a_strip_literal_atoms": {
+    "correct_wins": 0,
+    "correct_losses": 1,
+    "failed_wins": 0,
+    "failed_losses": 0,
+    "triggered": 7
+  },
+  "e2e_3b_blind_vote_align": {
+    "correct_wins": 0,
+    "correct_losses": 0,
+    "failed_wins": 0,
+    "failed_losses": 0,
+    "changed": 0
+  },
+  "gate_passed": false
+}

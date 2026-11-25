@@ -1,0 +1,118 @@
+{
+  "baseline": {
+    "tag": "baseline",
+    "adapter_dir": ".\\delivery\\goal201\\conditions04\\adapter",
+    "elapsed_seconds": 688.1,
+    "gpu_peak_bytes": 1801244160,
+    "blind": {
+      "all": {
+        "n": 120,
+        "top1_3inst": 67,
+        "top3_3inst": 70,
+        "top3_pub": 82
+      },
+      "empty": {
+        "n": 33,
+        "top1_3inst": 14,
+        "top3_3inst": 14,
+        "top3_pub": 21
+      },
+      "nonempty": {
+        "n": 87,
+        "top1_3inst": 53,
+        "top3_3inst": 56,
+        "top3_pub": 61
+      },
+      "issue_failed": {
+        "n": 57,
+        "top1_3inst": 24,
+        "top3_3inst": 26,
+        "top3_pub": 33
+      }
+    },
+    "repair": {
+      "all": {
+        "n": 120,
+        "top1_3inst": 69,
+        "top3_3inst": 77,
+        "top3_pub": 87
+      },
+      "empty": {
+        "n": 33,
+        "top1_3inst": 13,
+        "top3_3inst": 15,
+        "top3_pub": 21
+      },
+      "nonempty": {
+        "n": 87,
+        "top1_3inst": 56,
+        "top3_3inst": 62,
+        "top3_pub": 66
+      },
+      "issue_failed": {
+        "n": 57,
+        "top1_3inst": 25,
+        "top3_3inst": 30,
+        "top3_pub": 35
+      }
+    }
+  },
+  "train4_varA": {
+    "tag": "train4_varA",
+    "adapter_dir": ".\\outputs\\plan4\\train4_all\\epoch2",
+    "elapsed_seconds": 699.94,
+    "gpu_peak_bytes": 1801244160,
+    "blind": {
+      "all": {
+        "n": 120,
+        "top1_3inst": 74,
+        "top3_3inst": 81,
+        "top3_pub": 89
+      },
+      "empty": {
+        "n": 33,
+        "top1_3inst": 17,
+        "top3_3inst": 17,
+        "top3_pub": 24
+      },
+      "nonempty": {
+        "n": 87,
+        "top1_3inst": 57,
+        "top3_3inst": 64,
+        "top3_pub": 65
+      },
+      "issue_failed": {
+        "n": 57,
+        "top1_3inst": 26,
+        "top3_3inst": 31,
+        "top3_pub": 36
+      }
+    },
+    "repair": {
+      "all": {
+        "n": 120,
+        "top1_3inst": 80,
+        "top3_3inst": 84,
+        "top3_pub": 90
+      },
+      "empty": {
+        "n": 33,
+        "top1_3inst": 19,
+        "top3_3inst": 19,
+        "top3_pub": 23
+      },
+      "nonempty": {
+        "n": 87,
+        "top1_3inst": 61,
+        "top3_3inst": 65,
+        "top3_pub": 67
+      },
+      "issue_failed": {
+        "n": 57,
+        "top1_3inst": 30,
+        "top3_3inst": 32,
+        "top3_pub": 35
+      }
+    }
+  }
+}

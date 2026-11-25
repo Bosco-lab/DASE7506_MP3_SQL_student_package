@@ -1,0 +1,62 @@
+{
+  "python": "python",
+  "python_version": "3.12.16",
+  "sqlite": "3.54.1",
+  "sqlglot": "27.29.0",
+  "cpu_affinity": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "predict": {
+    "wall_seconds": 408.98509170000034,
+    "peak_tree_rss_bytes_sampled": 2655383552,
+    "cpu_seconds_sampled": 1447.515625,
+    "code": 0,
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "mp3_sql.predict",
+      "--split",
+      "validation",
+      "--method",
+      ".\\delivery\\plan4_frozen_conditions04\\submission\\submission.py",
+      "--checkpoint",
+      ".\\delivery\\plan4_frozen_conditions04\\submission\\config.json",
+      "--workers",
+      "1",
+      "--output",
+      ".\\delivery\\plan4_frozen_conditions04\\outputs\\validation\\validation.json"
+    ]
+  },
+  "score": {
+    "wall_seconds": 21.262278099999094,
+    "peak_tree_rss_bytes_sampled": 99704832,
+    "cpu_seconds_sampled": 17.734375,
+    "code": 0,
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "mp3_sql.score",
+      "--split",
+      "validation",
+      "--workers",
+      "4",
+      "--predictions",
+      ".\\delivery\\plan4_frozen_conditions04\\outputs\\validation\\validation.json",
+      "--output",
+      ".\\delivery\\plan4_frozen_conditions04\\outputs\\validation\\validation-score.json"
+    ]
+  },
+  "correct": 118,
+  "n": 120,
+  "accuracy": 98.33333333333333,
+  "mean_calls": 5.2,
+  "prediction_sha256": "633c122fca1b705418db003de0834eae0307ca1caecf3fe4e7d7ef8bda63b8e0",
+  "completions": 141,
+  "max_completions_per_task": 6,
+  "max_new_tokens": 104
+}

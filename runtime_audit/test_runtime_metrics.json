@@ -1,0 +1,62 @@
+{
+  "python": "python",
+  "python_version": "3.12.16",
+  "sqlite": "3.54.1",
+  "sqlglot": "27.29.0",
+  "cpu_affinity": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "predict": {
+    "wall_seconds": 1668.9571742999979,
+    "peak_tree_rss_bytes_sampled": 2912051200,
+    "cpu_seconds_sampled": 3871.046875,
+    "code": 0,
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "mp3_sql.predict",
+      "--split",
+      "test",
+      "--method",
+      ".\\delivery\\goal201\\conditions04\\submission\\submission.py",
+      "--checkpoint",
+      ".\\delivery\\goal201\\conditions04\\submission\\config.json",
+      "--workers",
+      "1",
+      "--output",
+      ".\\delivery\\goal201\\conditions04\\outputs\\test\\test.json"
+    ]
+  },
+  "score": {
+    "wall_seconds": 62.078121100003045,
+    "peak_tree_rss_bytes_sampled": 103165952,
+    "cpu_seconds_sampled": 54.65625,
+    "code": 0,
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "mp3_sql.score",
+      "--split",
+      "test",
+      "--workers",
+      "4",
+      "--predictions",
+      ".\\delivery\\goal201\\conditions04\\outputs\\test\\test.json",
+      "--output",
+      ".\\delivery\\goal201\\conditions04\\outputs\\test\\test-score.json"
+    ]
+  },
+  "correct": 200,
+  "n": 240,
+  "accuracy": 83.33333333333333,
+  "mean_calls": 5.195833333333334,
+  "prediction_sha256": "68f7fe905eadf5c68a563d698ef1d171052c8104b007731ddc8059dd3fcc34fe",
+  "completions": 288,
+  "max_completions_per_task": 6,
+  "max_new_tokens": 134
+}

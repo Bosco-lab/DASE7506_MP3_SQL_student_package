@@ -1,0 +1,32 @@
+{
+  "conditions04_val_correct": 118,
+  "dualfit04_val_correct": 115,
+  "n": 120,
+  "empty_cond04": "31/33",
+  "empty_dualfit04": "28/33",
+  "wins": [],
+  "losses": [
+    {
+      "id": "validation-de306200a6efff23",
+      "db_id": "restaurant_1",
+      "row_count": 0
+    },
+    {
+      "id": "validation-5dad6a54f441726e",
+      "db_id": "restaurant_1",
+      "row_count": 0
+    },
+    {
+      "id": "validation-36ce398902e7135d",
+      "db_id": "local_govt_mdm",
+      "row_count": 0
+    }
+  ],
+  "mean_calls": 5.266666666666667,
+  "completions": 138,
+  "max_completions_per_task": 6,
+  "max_new_tokens": 124,
+  "predict_wall_seconds": 440.91,
+  "score_wall_seconds": 22.34,
+  "peak_tree_rss_bytes": 2673635328
+}

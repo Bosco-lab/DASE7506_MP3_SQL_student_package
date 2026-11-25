@@ -1,0 +1,24 @@
+{
+  "split": "train_only",
+  "source_tasks": 480,
+  "v2_train_public_pass": 430,
+  "v2_train_public_fail": 50,
+  "v2_train_suspect_spurious_diff_from_gold": 257,
+  "total_sft_examples": 1313,
+  "view_counts": {
+    "post_v2_suspect_spurious": 257,
+    "issue_only": 454,
+    "hint_refine": 383,
+    "post_v2_alt": 119,
+    "post_v2_fail": 50,
+    "post_v2_fail_focused": 50
+  },
+  "unique_tasks_in_sft": 459,
+  "elapsed_seconds": 38.51,
+  "provenance": [
+    "mp3_sql/data/train.jsonl",
+    "mp3_sql/data/train_memory.jsonl",
+    "mp3_sql/data/repair_hints.json",
+    "mp3_sql/data/manifest.json (train schemas + train public sqlite DBs only)"
+  ]
+}

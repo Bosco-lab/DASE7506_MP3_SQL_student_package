@@ -1,0 +1,14 @@
+{
+  "python_version": "3.12.16",
+  "sqlite_version": "3.54.1",
+  "packages": {
+    "sqlglot": "27.29.0",
+    "torch": "2.14.1+cu126",
+    "transformers": "4.53.2",
+    "peft": "0.17.1",
+    "accelerate": "1.10.1",
+    "safetensors": "0.8.0",
+    "huggingface-hub": "0.36.2",
+    "psutil": "7.2.2"
+  }
+}

@@ -1,0 +1,998 @@
+{
+  "elapsed_seconds": 109.33,
+  "train": {
+    "split": "train",
+    "n": 480,
+    "issue_sql": {
+      "public_pass": 198,
+      "public_acc_pct": 41.25,
+      "all3_pass": 148,
+      "all3_acc_pct": 30.83,
+      "spurious_pass_count": 50,
+      "spurious_rate_of_public_pct": 25.25,
+      "fail_public_total": 282,
+      "fail_category": {
+        "execution_error": 155,
+        "wrong_result": 127
+      },
+      "exec_error_subtypes": {
+        "no_such_column": 115,
+        "syntax_or_parse": 11,
+        "aggregate_or_groupby": 5,
+        "ambiguous_column": 17,
+        "no_such_table": 6,
+        "timeout_or_other": 1
+      },
+      "wrong_result_subtypes": {
+        "same_shape_value_or_order_mismatch": 36,
+        "empty_result_when_nonempty": 29,
+        "column_count_mismatch": 25,
+        "extra_rows": 30,
+        "fewer_rows": 7
+      }
+    },
+    "repair_hint": {
+      "unique_hint_count_dist": {
+        "1": 394,
+        "2": 72,
+        "3": 11,
+        "4": 3
+      },
+      "avg_unique_hints": 1.21,
+      "unique_hints_diff_from_issue_dist": {
+        "0": 74,
+        "1": 325,
+        "2": 68,
+        "3": 10,
+        "4": 3
+      },
+      "hint_only_public_oracle": 385,
+      "hint_only_public_oracle_pct": 80.21,
+      "hint_only_all3_oracle": 347,
+      "hint_only_all3_oracle_pct": 72.29,
+      "combined_public_oracle": 397,
+      "combined_public_oracle_pct": 82.71,
+      "combined_all3_oracle": 357,
+      "combined_all3_oracle_pct": 74.38,
+      "oracle_public_to_all3_gap": 40,
+      "naive_first_pass": {
+        "public_pass": 397,
+        "public_acc_pct": 82.71,
+        "all3_pass": 326,
+        "all3_acc_pct": 67.92,
+        "spurious_lost_despite_oracle": 31,
+        "spurious_lost_no_oracle": 40
+      }
+    },
+    "unresolved_hard_cases": {
+      "count": 83,
+      "pct": 17.29,
+      "issue_sql_breakdown": {
+        "exec:no_such_column": 23,
+        "wrong:same_shape_value_or_order_mismatch": 17,
+        "wrong:empty_result_when_nonempty": 9,
+        "exec:syntax_or_parse": 5,
+        "wrong:column_count_mismatch": 9,
+        "wrong:fewer_rows": 5,
+        "wrong:extra_rows": 10,
+        "exec:ambiguous_column": 3,
+        "exec:no_such_table": 2
+      },
+      "representative_hint_breakdown": {
+        "wrong:extra_rows": 12,
+        "exec:no_such_column": 6,
+        "wrong:same_shape_value_or_order_mismatch": 26,
+        "wrong:fewer_rows": 11,
+        "wrong:column_count_mismatch": 14,
+        "exec:syntax_or_parse": 1,
+        "wrong:empty_result_when_nonempty": 12,
+        "wrong:same_shape_order_mismatch": 1
+      },
+      "gold_sql_diff_tags": {
+        "select_expr_mismatch": 52,
+        "distinct_mismatch": 8,
+        "where_mismatch": 32,
+        "table_or_join_mismatch": 33,
+        "groupby_mismatch": 22,
+        "orderby_mismatch": 21,
+        "set_op_or_subquery_structure": 12,
+        "select_col_count_mismatch": 14,
+        "subquery_mismatch": 8,
+        "having_mismatch": 8,
+        "limit_mismatch": 2,
+        "join_count_mismatch": 4
+      }
+    },
+    "spurious_pass_deep_dive": {
+      "tasks_with_any_spurious_candidate": 77,
+      "tasks_where_naive_first_pass_is_spurious": 71,
+      "tasks_distinct_toggle_fixes_all3": 9,
+      "tasks_distinct_related": 15,
+      "root_cause_counts": {
+        "empty_public_result (row_count=0)": 48,
+        "gold_diff:select_expr_mismatch": 46,
+        "gold_diff:where_mismatch": 41,
+        "gold_diff:table_or_join_mismatch": 30,
+        "single_row_public_result (row_count=1)": 23,
+        "ordered_tie_or_sort_mismatch": 18,
+        "gold_diff:subquery_mismatch": 12,
+        "gold_diff:distinct_mismatch": 11,
+        "gold_diff:groupby_mismatch": 8,
+        "gold_diff:set_op_or_subquery_structure": 7,
+        "multi_row_public_result (row_count>=2)": 6,
+        "gold_diff:join_count_mismatch": 6,
+        "distinct_fixable (remove_distinct)": 5,
+        "distinct_fixable (add_distinct)": 4,
+        "gold_diff:having_mismatch": 4,
+        "eval_db_execution_error": 1
+      }
+    },
+    "sample_cases": {
+      "spurious_distinct": [
+        {
+          "id": "train-ab2329ba85fdb84e",
+          "db_id": "debate",
+          "question": "Show the distinct venues of debates",
+          "ordered": false,
+          "public_row_count": 3,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": true,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT Venue\nFROM debate"
+          ],
+          "gold_sql": "SELECT DISTINCT Venue FROM debate",
+          "causes": [
+            "distinct_fixable (add_distinct)",
+            "gold_diff:distinct_mismatch",
+            "multi_row_public_result (row_count>=2)"
+          ]
+        },
+        {
+          "id": "train-39b3bfcaec9f5317",
+          "db_id": "product_catalog",
+          "question": "Find all the catalog publishers whose name contains \"Murray\"",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": true,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT Catalogs.catalog_publisher\nFROM Catalogs\nWHERE Catalogs.catalog_publisher LIKE '%Murray%';"
+          ],
+          "gold_sql": "SELECT distinct(catalog_publisher) FROM catalogs WHERE catalog_publisher LIKE \"%Murray%\"",
+          "causes": [
+            "distinct_fixable (add_distinct)",
+            "empty_public_result (row_count=0)",
+            "gold_diff:distinct_mismatch",
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:where_mismatch"
+          ]
+        },
+        {
+          "id": "train-e384f9615914cc71",
+          "db_id": "hospital_1",
+          "question": "Which physicians are trained in procedures that are more expensive than 5000?",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": false,
+          "distinct_fixable": true,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT Physician.Name\nFROM Physician\nJOIN Prescribes ON Physician.EmployeeID = Prescribes.Physician\nJOIN Procedures ON Prescribes.Patient = Procedures.Code\nWHERE Procedures.Cost > 5000;",
+            "SELECT DISTINCT Physician.Name\nFROM Physician\nJOIN Trained_In ON Physician.EmployeeID = Trained_In.Physician\nJOIN Procedures ON Trained_In.Treatment = Procedures.Code\nWHERE Procedures.Cost > 5000;"
+          ],
+          "gold_sql": "SELECT T1.name FROM physician AS T1 JOIN trained_in AS T2 ON T1.employeeid  =  T2.physician JOIN procedures AS T3 ON T3.code  =  T2.treatment WHERE T3.cost  >  5000",
+          "causes": [
+            "distinct_fixable (remove_distinct)",
+            "empty_public_result (row_count=0)",
+            "gold_diff:distinct_mismatch",
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:table_or_join_mismatch",
+            "gold_diff:where_mismatch"
+          ]
+        }
+      ],
+      "spurious_empty_or_tiny_public": [
+        {
+          "id": "train-743fdd71f2669e0f",
+          "db_id": "tracking_share_transactions",
+          "question": "Show the description of the transaction type that occurs most frequently.",
+          "ordered": true,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT transaction_type_description\nFROM Ref_Transaction_Types\nGROUP BY transaction_type_code\nORDER BY transaction_type_code\nDESC\nLIMIT 1;"
+          ],
+          "gold_sql": "SELECT T1.transaction_type_description FROM Ref_Transaction_Types AS T1 JOIN TRANSACTIONS AS T2 ON T1.transaction_type_code  =  T2.transaction_type_code GROUP BY T1.transaction_type_code ORDER BY COUNT(*) DESC LIMIT 1",
+          "causes": [
+            "ordered_tie_or_sort_mismatch",
+            "single_row_public_result (row_count=1)"
+          ]
+        },
+        {
+          "id": "train-df72e84414697ee2",
+          "db_id": "gymnast",
+          "question": "From which hometowns did both people older than 23 and younger than 20 come from?",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT people.Hometown\nFROM people\nWHERE Age > 23 AND Age < 20;"
+          ],
+          "gold_sql": "SELECT Hometown FROM people WHERE Age  >  23 INTERSECT SELECT Hometown FROM people WHERE Age  <  20",
+          "causes": [
+            "empty_public_result (row_count=0)",
+            "gold_diff:set_op_or_subquery_structure"
+          ]
+        },
+        {
+          "id": "train-b7a8ef7d9c9897e6",
+          "db_id": "loan_1",
+          "question": "What is the average credit score for customers who have taken a loan?",
+          "ordered": false,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": false,
+          "distinct_fixable": false,
+          "issue_pub_pass": false,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT AVG(customer.credit_score) AS average_credit_score\nFROM customer\nJOIN loan ON customer.cust_ID = loan.cust_ID;"
+          ],
+          "gold_sql": "SELECT avg(credit_score) FROM customer WHERE cust_id IN (SELECT cust_id FROM loan)",
+          "causes": [
+            "gold_diff:join_count_mismatch",
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:subquery_mismatch",
+            "gold_diff:where_mismatch",
+            "single_row_public_result (row_count=1)"
+          ]
+        }
+      ],
+      "spurious_other": [
+        {
+          "id": "train-8e8f5f32bf4bf6dc",
+          "db_id": "aircraft",
+          "question": "List the names of aircrafts and the number of times it won matches.",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": false,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT aircraft.Aircraft, COUNT(airport_aircraft.Aircraft_ID) AS times_won\nFROM aircraft\nJOIN airport_aircraft ON aircraft.Aircraft_ID = airport_aircraft.Aircraft_ID\nGROUP BY aircraft.Aircraft"
+          ],
+          "gold_sql": "SELECT T1.Aircraft ,  COUNT(*) FROM aircraft AS T1 JOIN MATCH AS T2 ON T1.Aircraft_ID  =  T2.Winning_Aircraft GROUP BY T2.Winning_Aircraft",
+          "causes": [
+            "empty_public_result (row_count=0)",
+            "gold_diff:groupby_mismatch",
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:table_or_join_mismatch"
+          ]
+        },
+        {
+          "id": "train-e1b5dfbc5ea4b463",
+          "db_id": "party_people",
+          "question": "Show names of parties that does not have any members.",
+          "ordered": false,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT party.Party_name\nFROM party\nWHERE party.Party_ID NOT IN (\n    SELECT Party_ID\n    FROM member\n    WHERE Member_ID IS NULL\n);"
+          ],
+          "gold_sql": "SELECT party_name FROM party WHERE party_id NOT IN (SELECT party_id FROM Member)",
+          "causes": [
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:subquery_mismatch",
+            "gold_diff:where_mismatch",
+            "single_row_public_result (row_count=1)"
+          ]
+        },
+        {
+          "id": "train-20210ade279627d0",
+          "db_id": "voter_2",
+          "question": "Find the distinct last names of the students who have class president votes.",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": false,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT DISTINCT LName\nFROM Student\nWHERE Student.StuID IN (\n    SELECT StuID\n    FROM Voting_record\n    WHERE Election_Cycle = 'Class' AND Class_President_Vote = 1\n);",
+            "SELECT DISTINCT S.LName\nFROM Student S\nJOIN Voting_record V ON S.StuID = V.Class_President_Vote\nWHERE V.Election_Cycle = 'Class';"
+          ],
+          "gold_sql": "SELECT DISTINCT T1.LName FROM STUDENT AS T1 JOIN VOTING_RECORD AS T2 ON T1.StuID  =  T2.CLASS_President_VOTE",
+          "causes": [
+            "empty_public_result (row_count=0)",
+            "gold_diff:join_count_mismatch",
+            "gold_diff:select_expr_mismatch",
+            "gold_diff:subquery_mismatch",
+            "gold_diff:where_mismatch"
+          ]
+        }
+      ],
+      "hint_exec_error": [
+        {
+          "id": "train-c73cc50378dfdfba",
+          "db_id": "products_gen_characteristics",
+          "question": "How many products have their color described as 'white' or have a characteristic with the name 'hot'?",
+          "hint_sql": "SELECT COUNT(DISTINCT Products.product_id)\nFROM Products\nLEFT JOIN Product_Characteristics ON Products.product_id = Product_Characteristics.product_id\nLEFT JOIN Characteristics ON Product_Characteristics.characteristic_id = Characteristics.characteristic_id\nWHERE Products.color_description = 'white' OR Characteristics.characteristic_name = 'hot';",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: Products.color_description"
+          },
+          "gold_sql": "SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id  =  t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id  =  t3.characteristic_id JOIN ref_colors AS t4 ON t1.color_code  =  t4.color_code WHERE t4.color_description  =  \"white\" OR t3.characteristic_name  =  \"hot\""
+        },
+        {
+          "id": "train-089c94c444974247",
+          "db_id": "network_2",
+          "question": "How many people are older than every engineer?",
+          "hint_sql": "SELECT COUNT(*) \nFROM Person \nWHERE age > ALL (\n    SELECT age \n    FROM PersonFriend \n    WHERE friend = Person.name \n    GROUP BY friend\n);",
+          "error": {
+            "type": "OperationalError",
+            "message": "near \"ALL\": syntax error"
+          },
+          "gold_sql": "SELECT count(*) FROM Person WHERE age  >  (SELECT max(age) FROM person WHERE job  =  'engineer')"
+        },
+        {
+          "id": "train-cd5a4b149c36067c",
+          "db_id": "station_weather",
+          "question": "Find the number and time of the train that goes from Chennai to Guruvayur.",
+          "hint_sql": "SELECT train.train_number, train.time\nFROM train\nJOIN route ON train.train_id = route.train_id\nJOIN station ON route.station_id = station.id\nWHERE station.network_name = 'Chennai' AND train.destination = 'Guruvayur';",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: train.train_id"
+          },
+          "gold_sql": "SELECT train_number ,  TIME FROM train WHERE origin  =  'Chennai' AND destination  =  'Guruvayur'"
+        }
+      ],
+      "unresolved_hard": [
+        {
+          "id": "train-adc8bb4c90469db1",
+          "db_id": "student_1",
+          "question": "What are the first names of the teachers who teach grade 1?",
+          "issue_sql": "SELECT FirstName\nFROM teachers\nWHERE Grade = 1;",
+          "issue_error": {
+            "type": "OperationalError",
+            "message": "no such column: Grade"
+          },
+          "hints": [
+            "SELECT t.FirstName\nFROM teachers t\nJOIN list l ON t.Classroom = l.Classroom\nWHERE l.Grade = 1;"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "FirstName"
+            ],
+            "rows": [
+              [
+                " OTHA"
+              ]
+            ],
+            "row_count": 1,
+            "truncated": false
+          },
+          "gold_sql": "SELECT DISTINCT T2.firstname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE grade  =  1"
+        },
+        {
+          "id": "train-c73cc50378dfdfba",
+          "db_id": "products_gen_characteristics",
+          "question": "How many products have their color described as 'white' or have a characteristic with the name 'hot'?",
+          "issue_sql": "SELECT COUNT(*) \nFROM Products \nWHERE product_description LIKE '%white%' OR \n      (SELECT characteristic_name FROM Product_Characteristics \n       WHERE product_characteristic_value = 'hot') IS NOT NULL;",
+          "issue_error": {
+            "type": "OperationalError",
+            "message": "no such column: characteristic_name"
+          },
+          "hints": [
+            "SELECT COUNT(DISTINCT Products.product_id)\nFROM Products\nLEFT JOIN Product_Characteristics ON Products.product_id = Product_Characteristics.product_id\nLEFT JOIN Characteristics ON Product_Characteristics.characteristic_id = Characteristics.characteristic_id\nWHERE Products.color_description = 'white' OR Characteristics.characteristic_name = 'hot';"
+          ],
+          "hint_pub_errors": [
+            {
+              "type": "OperationalError",
+              "message": "no such column: Products.color_description"
+            }
+          ],
+          "example": {
+            "columns": [
+              "count(*)"
+            ],
+            "rows": [
+              [
+                0
+              ]
+            ],
+            "row_count": 1,
+            "truncated": false
+          },
+          "gold_sql": "SELECT count(*) FROM products AS t1 JOIN product_characteristics AS t2 ON t1.product_id  =  t2.product_id JOIN CHARACTERISTICS AS t3 ON t2.characteristic_id  =  t3.characteristic_id JOIN ref_colors AS t4 ON t1.color_code  =  t4.color_code WHERE t4.color_description  =  \"white\" OR t3.characteristic_name  =  \"hot\""
+        },
+        {
+          "id": "train-586a26b875816fb7",
+          "db_id": "csu_1",
+          "question": "In what year was the most degrees conferred?",
+          "issue_sql": "SELECT Year\nFROM degrees\nORDER BY Degrees DESC\nLIMIT 1;",
+          "issue_error": null,
+          "hints": [
+            "SELECT Year\nFROM degrees\nORDER BY Degrees DESC\nLIMIT 1;"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "Year"
+            ],
+            "rows": [
+              [
+                2003
+              ]
+            ],
+            "row_count": 1,
+            "truncated": false
+          },
+          "gold_sql": "SELECT YEAR FROM degrees GROUP BY YEAR ORDER BY sum(degrees) DESC LIMIT 1"
+        },
+        {
+          "id": "train-594f7846a27cf8de",
+          "db_id": "browser_web",
+          "question": "Show the accelerator names and supporting operating systems that are not compatible with the browser named 'Opera'.",
+          "issue_sql": "SELECT accelerator.name, accelerator.operating_system\nFROM Web_client_accelerator accelerator\nJOIN accelerator_compatible_browser on accelerator.id = accelerator_compatible_browser.accelerator_id\nWHERE browser.name = 'Opera'\nAND accelerator_compatible_browser.compatible_since_year IS NULL;",
+          "issue_error": {
+            "type": "OperationalError",
+            "message": "no such column: browser.name"
+          },
+          "hints": [
+            "SELECT accelerator.name, accelerator.Operating_system\nFROM Web_client_accelerator accelerator\nLEFT JOIN accelerator_compatible_browser ON accelerator.id = accelerator_compatible_browser.accelerator_id\nLEFT JOIN browser ON accelerator_compatible_browser.browser_id = browser.id\nWHERE browser.name != 'Opera';"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "name",
+              "Operating_system"
+            ],
+            "rows": [
+              [
+                "CACHEbox",
+                "Appliance (Linux)"
+              ],
+              [
+                "Fasterfox",
+                "Windows, Mac, Linux and Mobile devices"
+              ],
+              [
+                "Google Web Accelerator (discontinued)",
+                "Windows"
+              ],
+              [
+                "Heigh Speed",
+                "Windows"
+              ],
+              [
+                "Netfury",
+                "Windows, Mac"
+              ],
+              [
+                "Nitro",
+                "Windows, Mac"
+              ],
+              [
+                "Opera Turbo",
+                "Android, Linux, Mac and Windows devices"
+              ],
+              [
+                "Propel",
+                "Windows, Mac"
+              ]
+            ],
+            "row_count": 10,
+            "truncated": true
+          },
+          "gold_sql": "SELECT name ,  operating_system FROM web_client_accelerator EXCEPT SELECT T1.name ,  T1.operating_system FROM web_client_accelerator AS T1 JOIN accelerator_compatible_browser AS T2 ON T2.accelerator_id  =  T1.id JOIN browser AS T3 ON T2.browser_id  =  T3.id WHERE T3.name  =  'Opera'"
+        }
+      ],
+      "issue_missing_join": [
+        {
+          "id": "train-adc8bb4c90469db1",
+          "db_id": "student_1",
+          "question": "What are the first names of the teachers who teach grade 1?",
+          "issue_sql": "SELECT FirstName\nFROM teachers\nWHERE Grade = 1;",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: Grade"
+          },
+          "hints": [
+            "SELECT t.FirstName\nFROM teachers t\nJOIN list l ON t.Classroom = l.Classroom\nWHERE l.Grade = 1;"
+          ],
+          "gold_sql": "SELECT DISTINCT T2.firstname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE grade  =  1"
+        },
+        {
+          "id": "train-b596fbe01f7d29df",
+          "db_id": "shop_membership",
+          "question": "What is the total number of purchases for members with level 6?",
+          "issue_sql": "SELECT COUNT(*) AS total_purchases\nFROM purchase\nWHERE Level = 6;",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: Level"
+          },
+          "hints": [
+            "SELECT COUNT(*) AS total_purchases\nFROM purchase\nJOIN member ON purchase.Member_ID = member.Member_ID\nWHERE member.Level = 6;"
+          ],
+          "gold_sql": "SELECT count(*) FROM purchase AS T1 JOIN member AS T2 ON T1.member_id  =  T2.member_id WHERE T2.level  =  6"
+        },
+        {
+          "id": "train-18e61e0b51d41d9f",
+          "db_id": "theme_gallery",
+          "question": "How many exhibitions have a attendance more than 100 or have a ticket price below 10?",
+          "issue_sql": "SELECT COUNT(*) AS total\nFROM exhibition\nWHERE (Attendance > 100 OR Ticket_Price < 10);",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: Attendance"
+          },
+          "hints": [
+            "SELECT COUNT(*) AS total\nFROM exhibition\nJOIN exhibition_record ON exhibition.Exhibition_ID = exhibition_record.Exhibition_ID\nWHERE (exhibition_record.Attendance > 100 OR exhibition.Ticket_Price < 10);"
+          ],
+          "gold_sql": "SELECT count(*) FROM exhibition_record AS T1 JOIN exhibition AS T2 ON T1.exhibition_id  =  T2.exhibition_id WHERE T1.attendance  >  100 OR T2.ticket_price  <  10"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "split": "validation",
+    "n": 120,
+    "issue_sql": {
+      "public_pass": 63,
+      "public_acc_pct": 52.5,
+      "all3_pass": 47,
+      "all3_acc_pct": 39.17,
+      "spurious_pass_count": 16,
+      "spurious_rate_of_public_pct": 25.4,
+      "fail_public_total": 57,
+      "fail_category": {
+        "wrong_result": 27,
+        "execution_error": 30
+      },
+      "exec_error_subtypes": {
+        "no_such_column": 23,
+        "syntax_or_parse": 2,
+        "ambiguous_column": 2,
+        "aggregate_or_groupby": 2,
+        "no_such_table": 1
+      },
+      "wrong_result_subtypes": {
+        "empty_result_when_nonempty": 6,
+        "same_shape_value_or_order_mismatch": 7,
+        "column_count_mismatch": 4,
+        "extra_rows": 10
+      }
+    },
+    "repair_hint": {
+      "unique_hint_count_dist": {
+        "1": 93,
+        "2": 25,
+        "3": 2
+      },
+      "avg_unique_hints": 1.24,
+      "unique_hints_diff_from_issue_dist": {
+        "0": 18,
+        "1": 80,
+        "2": 20,
+        "3": 2
+      },
+      "hint_only_public_oracle": 91,
+      "hint_only_public_oracle_pct": 75.83,
+      "hint_only_all3_oracle": 81,
+      "hint_only_all3_oracle_pct": 67.5,
+      "combined_public_oracle": 95,
+      "combined_public_oracle_pct": 79.17,
+      "combined_all3_oracle": 86,
+      "combined_all3_oracle_pct": 71.67,
+      "oracle_public_to_all3_gap": 9,
+      "naive_first_pass": {
+        "public_pass": 95,
+        "public_acc_pct": 79.17,
+        "all3_pass": 73,
+        "all3_acc_pct": 60.83,
+        "spurious_lost_despite_oracle": 13,
+        "spurious_lost_no_oracle": 9
+      }
+    },
+    "unresolved_hard_cases": {
+      "count": 25,
+      "pct": 20.83,
+      "issue_sql_breakdown": {
+        "wrong:empty_result_when_nonempty": 4,
+        "wrong:same_shape_value_or_order_mismatch": 4,
+        "wrong:column_count_mismatch": 2,
+        "wrong:extra_rows": 1,
+        "exec:no_such_column": 11,
+        "exec:syntax_or_parse": 2,
+        "exec:no_such_table": 1
+      },
+      "representative_hint_breakdown": {
+        "wrong:empty_result_when_nonempty": 4,
+        "wrong:same_shape_value_or_order_mismatch": 11,
+        "wrong:column_count_mismatch": 5,
+        "wrong:extra_rows": 1,
+        "exec:no_such_column": 2,
+        "wrong:fewer_rows": 1,
+        "exec:ambiguous_column": 1
+      },
+      "gold_sql_diff_tags": {}
+    },
+    "spurious_pass_deep_dive": {
+      "tasks_with_any_spurious_candidate": 25,
+      "tasks_where_naive_first_pass_is_spurious": 22,
+      "tasks_distinct_toggle_fixes_all3": 2,
+      "tasks_distinct_related": 2,
+      "root_cause_counts": {
+        "empty_public_result (row_count=0)": 14,
+        "single_row_public_result (row_count=1)": 8,
+        "ordered_tie_or_sort_mismatch": 5,
+        "multi_row_public_result (row_count>=2)": 3,
+        "distinct_fixable (add_distinct)": 1,
+        "distinct_fixable (remove_distinct)": 1
+      }
+    },
+    "sample_cases": {
+      "spurious_distinct": [
+        {
+          "id": "validation-536cac19f45fc4fc",
+          "db_id": "architecture",
+          "question": "What are the distinct types of mills that are built by American or Canadian architects?",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": true,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT mill.type\nFROM mill\nJOIN architect ON mill.architect_id = architect.id\nWHERE architect.nationality IN ('American', 'Canadian');"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "distinct_fixable (add_distinct)",
+            "empty_public_result (row_count=0)"
+          ]
+        },
+        {
+          "id": "validation-ab68d815813fb4b7",
+          "db_id": "journal_committee",
+          "question": "Show the names of editors that are on the committee of journals with sales bigger than 3000.",
+          "ordered": false,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": true,
+          "issue_pub_pass": true,
+          "issue_all3_pass": true,
+          "spurious_sqls": [
+            "SELECT DISTINCT editor.Name\nFROM editor\nJOIN journal_committee ON editor.Editor_ID = journal_committee.Editor_ID\nJOIN journal ON journal_committee.Journal_ID = journal.Journal_ID\nWHERE journal.Sales > 3000;"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "distinct_fixable (remove_distinct)",
+            "single_row_public_result (row_count=1)"
+          ]
+        }
+      ],
+      "spurious_empty_or_tiny_public": [
+        {
+          "id": "validation-a402046f584d4813",
+          "db_id": "restaurant_1",
+          "question": "What is the age of student Linda Smith?",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT Student.Age FROM Student WHERE LName = 'Linda Smith';"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "empty_public_result (row_count=0)"
+          ]
+        },
+        {
+          "id": "validation-6d8add77db18ef60",
+          "db_id": "program_share",
+          "question": "find the name of the program that was launched most recently.",
+          "ordered": true,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT program.Name\nFROM program\nWHERE program.Program_ID IN (\n    SELECT broadcast.Program_ID\n    FROM broadcast\n    JOIN broadcast_share ON broadcast.Program_ID = broadcast_share.Program_ID\n    ORDER BY broadcast.Time_of_day DESC\n    LIMIT 1\n);"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "ordered_tie_or_sort_mismatch",
+            "single_row_public_result (row_count=1)"
+          ]
+        },
+        {
+          "id": "validation-0e21eef6ed8ada4e",
+          "db_id": "company_employee",
+          "question": "Show the names of companies and of employees.",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT company.Name, employment.People_ID\nFROM company\nJOIN employment ON company.Company_ID = employment.Company_ID\nJOIN people ON employment.People_ID = people.People_ID"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "empty_public_result (row_count=0)"
+          ]
+        }
+      ],
+      "spurious_other": [
+        {
+          "id": "validation-de306200a6efff23",
+          "db_id": "restaurant_1",
+          "question": "What is the rating of the restaurant Subway?",
+          "ordered": false,
+          "public_row_count": 0,
+          "c_all3_oracle_exists": false,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT Restaurant.Rating\nFROM Restaurant\nWHERE ResID = (SELECT ResID FROM Restaurant_Type WHERE ResTypeDescription = 'Subway');",
+            "SELECT Restaurant.Rating\nFROM Restaurant\nJOIN Type_Of_Restaurant ON Restaurant.ResID = Type_Of_Restaurant.ResID\nJOIN Restaurant_Type ON Type_Of_Restaurant.ResTypeID = Restaurant_Type.ResTypeID\nWHERE Restaurant_Type.ResTypeName = 'Subway';"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "empty_public_result (row_count=0)"
+          ]
+        },
+        {
+          "id": "validation-f76a31ffe49ff88d",
+          "db_id": "e_government",
+          "question": "What is the last name of the first individual contacted from the organization with the maximum UK Vat number across all organizations?",
+          "ordered": true,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": true,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT individual_last_name\nFROM Individuals\nJOIN Organization_Contact_Individuals ON Individuals.individual_id = Organization_Contact_Individuals.individual_id\nJOIN Organizations ON Organization_Contact_Individuals.organization_id = Organizations.organization_id\nWHERE Organizations.uk_vat_number = (SELECT MAX(uk_vat_number) FROM Organizations);",
+            "SELECT i.individual_last_name\nFROM Individuals i\nJOIN Organization_Contact_Individuals oci ON i.individual_id = oci.individual_id\nJOIN Organizations o ON oci.organization_id = o.organization_id\nWHERE o.uk_vat_number = (SELECT MAX(uk_vat_number) FROM Organizations)\nORDER BY oci.date_contact_from\nLIMIT 1;"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "ordered_tie_or_sort_mismatch",
+            "single_row_public_result (row_count=1)"
+          ]
+        },
+        {
+          "id": "validation-f1a67e3024ea10f2",
+          "db_id": "program_share",
+          "question": "How many distinct programs are broadcast at \"Night\" time?",
+          "ordered": false,
+          "public_row_count": 1,
+          "c_all3_oracle_exists": true,
+          "distinct_fixable": false,
+          "issue_pub_pass": false,
+          "issue_all3_pass": false,
+          "spurious_sqls": [
+            "SELECT COUNT(DISTINCT b.Program_ID) AS distinct_programs\nFROM broadcast b\nJOIN broadcast_share bs ON b.Channel_ID = bs.Channel_ID AND b.Program_ID = bs.Program_ID\nWHERE b.Time_of_day = 'Night';"
+          ],
+          "gold_sql": null,
+          "causes": [
+            "single_row_public_result (row_count=1)"
+          ]
+        }
+      ],
+      "hint_exec_error": [
+        {
+          "id": "validation-1b6e5a6dd2d6aa32",
+          "db_id": "music_1",
+          "question": "What is the average song duration for the songs that are in mp3 format and whose resolution below 800?",
+          "hint_sql": "SELECT AVG(T1.duration) AS average_song_duration\nFROM song T1\nJOIN files T2 ON T1.f_id = T2.f_id\nWHERE T2.formats LIKE '%mp3%' AND T1.resolution < 800;",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: T1.duration"
+          },
+          "gold_sql": null
+        },
+        {
+          "id": "validation-30b61a74da23f747",
+          "db_id": "culture_company",
+          "question": "Show the movie titles and book titles for all companies in China.",
+          "hint_sql": "SELECT movie.Title, book_club.Book_Title\nFROM movie\nJOIN culture_company ON movie.book_club_id = culture_company.book_club_id\nJOIN book_club ON culture_company.book_club_id = book_club.book_club_id\nWHERE culture_company.Incorporated_in = 'China';",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: movie.book_club_id"
+          },
+          "gold_sql": null
+        },
+        {
+          "id": "validation-5dad6a54f441726e",
+          "db_id": "restaurant_1",
+          "question": "When did Linda Smith visit Subway?",
+          "hint_sql": "SELECT v.Time \nFROM Visits_Restaurant v\nJOIN Student s ON v.StuID = s.StuID\nJOIN Restaurant r ON v.ResID = r.ResID\nJOIN Restaurant_Type rt ON r.ResTypeID = rt.ResTypeID\nWHERE s.LName = 'Smith' \n  AND s.Fname = 'Linda' \n  AND r.ResName = 'Subway' \n  AND rt.ResTypeName = 'Type of Restaurant' \n  AND rt.ResTypeDescription = 'Subway';",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: r.ResTypeID"
+          },
+          "gold_sql": null
+        }
+      ],
+      "unresolved_hard": [
+        {
+          "id": "validation-3c4d5ecbd3a4ffc8",
+          "db_id": "company_employee",
+          "question": "Show the headquarters that have at least two companies.",
+          "issue_sql": "SELECT company.Headquarters\nFROM company\nWHERE company.Company_ID IN (\n    SELECT Company_ID\n    FROM employment\n    GROUP BY Company_ID\n    HAVING COUNT(employment.Company_ID) >= 2\n);",
+          "issue_error": null,
+          "hints": [
+            "SELECT DISTINCT company.Headquarters\nFROM company\nWHERE company.Company_ID IN (\n    SELECT Company_ID\n    FROM employment\n    GROUP BY Company_ID\n    HAVING COUNT(DISTINCT People_ID) >= 2\n);"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "Headquarters"
+            ],
+            "rows": [
+              [
+                "China"
+              ],
+              [
+                "USA"
+              ]
+            ],
+            "row_count": 2,
+            "truncated": false
+          },
+          "gold_sql": null
+        },
+        {
+          "id": "validation-8be8e9f30c5ed3cc",
+          "db_id": "sports_competition",
+          "question": "What are the maximum and minimum number of silver medals for all the clubs?",
+          "issue_sql": "SELECT MIN(Silver) AS min_silver, MAX(Silver) AS max_silver\nFROM club_rank;",
+          "issue_error": null,
+          "hints": [
+            "SELECT MIN(Silver) AS min_silver, MAX(Silver) AS max_silver\nFROM club_rank;"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "max(Silver)",
+              "min(Silver)"
+            ],
+            "rows": [
+              [
+                11.0,
+                1.0
+              ]
+            ],
+            "row_count": 1,
+            "truncated": false
+          },
+          "gold_sql": null
+        },
+        {
+          "id": "validation-9a3d5d1c1dfe328b",
+          "db_id": "local_govt_mdm",
+          "question": "Wat is the tax source system code and master customer id of the taxes related to each parking fine id?",
+          "issue_sql": "SELECT CMI_Cross_References.source_system_code, Customer_Master_Index.master_customer_id\nFROM Benefits_Overpayments\nJOIN Business_Rates ON Benefits_Overpayments.cmi_cross_ref_id = Business_Rates.cmi_cross_ref_id\nJOIN CMI_Cross_References ON Business_Rates.cmi_cross_ref_id = CMI_Cross_References.cmi_cross_ref_id\nJOIN Parking_Fines ON Parking_Fines.cmi_cross_ref_id = CMI_Cross_References.cmi_cross_ref_id\nJOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id\nWHERE Parking_Fines.council_tax_id = 1;",
+          "issue_error": null,
+          "hints": [
+            "SELECT CMI_Cross_References.source_system_code, Customer_Master_Index.master_customer_id\nFROM Parking_Fines\nJOIN CMI_Cross_References ON Parking_Fines.cmi_cross_ref_id = CMI_Cross_References.cmi_cross_ref_id\nJOIN Customer_Master_Index ON CMI_Cross_References.master_customer_id = Customer_Master_Index.master_customer_id;"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "source_system_code",
+              "master_customer_id",
+              "council_tax_id"
+            ],
+            "rows": [],
+            "row_count": 0,
+            "truncated": false
+          },
+          "gold_sql": null
+        },
+        {
+          "id": "validation-fa96b1ccd568803a",
+          "db_id": "products_for_hire",
+          "question": "Are the customers holding coupons with amount 500 bad or good?",
+          "issue_sql": "SELECT COUNT(*) FROM Customers\nWHERE good_or_bad_customer = 'bad';",
+          "issue_error": null,
+          "hints": [
+            "SELECT good_or_bad_customer, COUNT(*) AS count\nFROM Customers\nWHERE coupon_id IN (\n    SELECT coupon_id\n    FROM Discount_Coupons\n    WHERE coupon_amount = 500\n)\nGROUP BY good_or_bad_customer;"
+          ],
+          "hint_pub_errors": [
+            null
+          ],
+          "example": {
+            "columns": [
+              "good_or_bad_customer"
+            ],
+            "rows": [],
+            "row_count": 0,
+            "truncated": false
+          },
+          "gold_sql": null
+        }
+      ],
+      "issue_missing_join": [
+        {
+          "id": "validation-6ff42b00b3afd128",
+          "db_id": "department_store",
+          "question": "Find the id of suppliers whose average amount purchased for each product is above 50000 or below 30000.",
+          "issue_sql": "SELECT Suppliers.supplier_id\nFROM Suppliers\nWHERE (SELECT AVG(total_value_purchased) OVER (PARTITION BY Products.product_id) > 50000 OR AVG(total_value_purchased) OVER (PARTITION BY Products.product_id) < 30000)",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: total_value_purchased"
+          },
+          "hints": [
+            "SELECT DISTINCT Product_Suppliers.supplier_id\nFROM Product_Suppliers\nGROUP BY Product_Suppliers.supplier_id\nHAVING AVG(CAST(total_value_purchased AS REAL)) > 50000\n   OR AVG(CAST(total_value_purchased AS REAL)) < 30000;",
+            "SELECT DISTINCT ps.supplier_id\nFROM Product_Suppliers ps\nJOIN Products p ON ps.product_id = p.product_id\nGROUP BY ps.supplier_id\nHAVING AVG(CAST(ps.total_value_purchased AS REAL)) > 50000\n   OR AVG(CAST(ps.total_value_purchased AS REAL)) < 30000;"
+          ],
+          "gold_sql": null
+        },
+        {
+          "id": "validation-1b6e5a6dd2d6aa32",
+          "db_id": "music_1",
+          "question": "What is the average song duration for the songs that are in mp3 format and whose resolution below 800?",
+          "issue_sql": "SELECT AVG(song.duration) AS average_song_duration\nFROM song\nWHERE song.file_formats LIKE '%mp3%' AND song.resolution < 800;",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: song.duration"
+          },
+          "hints": [
+            "SELECT AVG(T1.duration) AS average_song_duration\nFROM song T1\nJOIN files T2 ON T1.f_id = T2.f_id\nWHERE T2.formats LIKE '%mp3%' AND T1.resolution < 800;"
+          ],
+          "gold_sql": null
+        },
+        {
+          "id": "validation-a75b7764fcacce68",
+          "db_id": "dorm_1",
+          "question": "How many students are older than average for each gender?",
+          "issue_sql": "SELECT \n    gender, \n    AVG(Age) AS average_age,\n    COUNT(*) AS number_of_students\nFROM \n    Student\nGROUP BY \n    gender;",
+          "error": {
+            "type": "OperationalError",
+            "message": "no such column: gender"
+          },
+          "hints": [
+            "SELECT \n    Sex, \n    COUNT(*) AS count\nFROM \n    Student\nGROUP BY \n    Sex;"
+          ],
+          "gold_sql": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "weight_grid": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "train_grid_correct": [
+    369,
+    370,
+    370,
+    369,
+    369,
+    371
+  ],
+  "weight": 4.0,
+  "fold_control": [
+    {
+      "fold": 0,
+      "held_tasks": 87,
+      "weight_from_other_folds": 4.0,
+      "correct": 79,
+      "baseline": 78
+    },
+    {
+      "fold": 1,
+      "held_tasks": 79,
+      "weight_from_other_folds": 0.25,
+      "correct": 71,
+      "baseline": 71
+    },
+    {
+      "fold": 2,
+      "held_tasks": 81,
+      "weight_from_other_folds": 4.0,
+      "correct": 74,
+      "baseline": 75
+    },
+    {
+      "fold": 3,
+      "held_tasks": 84,
+      "weight_from_other_folds": 0.25,
+      "correct": 71,
+      "baseline": 71
+    },
+    {
+      "fold": 4,
+      "held_tasks": 83,
+      "weight_from_other_folds": 4.0,
+      "correct": 74,
+      "baseline": 74
+    }
+  ],
+  "cohorts": {
+    "p2_train": {
+      "tasks": 480,
+      "single_pass": 31,
+      "unchanged_correct": 28,
+      "outside_p2": 0,
+      "no_pass": 35,
+      "ambiguous": 414,
+      "candidates": 2044,
+      "ambiguous_correct": {
+        "first": 364,
+        "v5": 369,
+        "likelihood": 360,
+        "blend": 371,
+        "oracle": 387,
+        "mixed_labels": 119
+      },
+      "paired": {
+        "v5_to_first": {
+          "switch": 68,
+          "gain": 2,
+          "loss": 7
+        },
+        "v5_to_likelihood": {
+          "switch": 224,
+          "gain": 12,
+          "loss": 21
+        },
+        "v5_to_blend": {
+          "switch": 104,
+          "gain": 8,
+          "loss": 6
+        }
+      },
+      "full_correct": {
+        "first": 392,
+        "v5": 397,
+        "likelihood": 388,
+        "blend": 399,
+        "oracle": 415
+      }
+    },
+    "p2_validation": {
+      "tasks": 120,
+      "no_pass": 8,
+      "unchanged_correct": 6,
+      "outside_p2": 0,
+      "single_pass": 7,
+      "ambiguous": 105,
+      "candidates": 551,
+      "ambiguous_correct": {
+        "first": 92,
+        "v5": 92,
+        "likelihood": 86,
+        "blend": 89,
+        "oracle": 96,
+        "mixed_labels": 30
+      },
+      "paired": {
+        "v5_to_first": {
+          "switch": 24,
+          "gain": 1,
+          "loss": 1
+        },
+        "v5_to_likelihood": {
+          "switch": 53,
+          "gain": 1,
+          "loss": 7
+        },
+        "v5_to_blend": {
+          "switch": 26,
+          "gain": 0,
+          "loss": 3
+        }
+      },
+      "full_correct": {
+        "first": 98,
+        "v5": 98,
+        "likelihood": 92,
+        "blend": 95,
+        "oracle": 102
+      }
+    },
+    "v46b_validation": {
+      "tasks": 120,
+      "single_pass": 61,
+      "unchanged_correct": 56,
+      "outside_p2": 12,
+      "new_validation_labels": 9,
+      "no_pass": 4,
+      "ambiguous": 55,
+      "candidates": 129,
+      "ambiguous_correct": {
+        "first": 36,
+        "v5": 46,
+        "likelihood": 48,
+        "blend": 47,
+        "manual": 51,
+        "manual_agreement": 50,
+        "oracle": 52,
+        "mixed_labels": 19
+      },
+      "paired": {
+        "manual_to_blend": {
+          "switch": 19,
+          "gain": 0,
+          "loss": 4
+        },
+        "manual_to_manual_agreement": {
+          "switch": 7,
+          "gain": 0,
+          "loss": 1
+        },
+        "manual_to_v5": {
+          "switch": 15,
+          "gain": 0,
+          "loss": 5
+        },
+        "manual_to_first": {
+          "switch": 43,
+          "gain": 0,
+          "loss": 15
+        },
+        "manual_to_likelihood": {
+          "switch": 21,
+          "gain": 0,
+          "loss": 3
+        },
+        "v5_to_manual": {
+          "switch": 15,
+          "gain": 5,
+          "loss": 0
+        },
+        "v5_to_blend": {
+          "switch": 12,
+          "gain": 2,
+          "loss": 1
+        },
+        "v5_to_manual_agreement": {
+          "switch": 8,
+          "gain": 4,
+          "loss": 0
+        },
+        "v5_to_first": {
+          "switch": 45,
+          "gain": 2,
+          "loss": 12
+        },
+        "v5_to_likelihood": {
+          "switch": 22,
+          "gain": 4,
+          "loss": 2
+        }
+      },
+      "full_correct": {
+        "first": 92,
+        "v5": 102,
+        "likelihood": 104,
+        "blend": 103,
+        "manual": 107,
+        "manual_agreement": 106,
+        "oracle": 108
+      }
+    }
+  }
+}

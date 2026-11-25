@@ -1,0 +1,19 @@
+{
+  "num_pairs": 336,
+  "hyperparameters": {
+    "base_adapter": "outputs\\lora_adapter",
+    "max_seq_len": 768,
+    "epochs": 1,
+    "lr": 5e-05,
+    "beta": 0.15,
+    "nll_alpha": 0.1,
+    "grad_accum": 16,
+    "seed": 7506
+  },
+  "peak_vram_allocated_mib": 8695.04,
+  "wall_seconds": 2143.04,
+  "adapter_files": [
+    "adapter_config.json",
+    "adapter_model.safetensors"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "base_model": "Qwen/Qwen3-0.6B",
+  "base_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "base_param_count": 596049920,
+  "adapter_param_count": 10092544,
+  "total_param_count": 606142464,
+  "trainable_pct": 1.6932,
+  "lora_config": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "down_proj",
+      "gate_proj",
+      "k_proj",
+      "o_proj",
+      "q_proj",
+      "up_proj",
+      "v_proj"
+    ],
+    "bias": "none",
+    "modules_to_save": null
+  },
+  "hyperparameters": {
+    "max_seq_len": 1536,
+    "gradient_checkpointing": true,
+    "batch_size": 1,
+    "grad_accum": 16,
+    "effective_batch_size": 16,
+    "epochs": 2,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.05,
+    "dtype": "bfloat16",
+    "seed": 7506
+  },
+  "dataset": {
+    "path": "outputs\\lora_sft_train.jsonl",
+    "num_samples": 935,
+    "truncated_count": 0,
+    "max_raw_tokens": 1507,
+    "mean_raw_tokens": 597.39
+  },
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "peak_vram_allocated_mib": 4454.95,
+  "peak_vram_reserved_mib": 13560.0,
+  "wall_seconds": 1334.64,
+  "epoch_logs": [
+    {
+      "epoch": 1,
+      "mean_loss": 0.3336,
+      "seconds": 637.85
+    },
+    {
+      "epoch": 2,
+      "mean_loss": 0.0824,
+      "seconds": 690.7
+    }
+  ],
+  "step_logs": [
+    {
+      "step": 10,
+      "epoch": 1,
+      "loss": 0.8451,
+      "lr": 0.00029855
+    },
+    {
+      "step": 20,
+      "epoch": 1,
+      "loss": 0.2883,
+      "lr": 0.00028714
+    },
+    {
+      "step": 30,
+      "epoch": 1,
+      "loss": 0.3209,
+      "lr": 0.0002652
+    },
+    {
+      "step": 40,
+      "epoch": 1,
+      "loss": 0.1981,
+      "lr": 0.00023442
+    },
+    {
+      "step": 50,
+      "epoch": 1,
+      "loss": 0.1744,
+      "lr": 0.00019715
+    },
+    {
+      "step": 60,
+      "epoch": 2,
+      "loss": 0.124,
+      "lr": 0.00015625
+    },
+    {
+      "step": 70,
+      "epoch": 2,
+      "loss": 0.0953,
+      "lr": 0.00011488
+    },
+    {
+      "step": 80,
+      "epoch": 2,
+      "loss": 0.0875,
+      "lr": 7.621e-05
+    },
+    {
+      "step": 90,
+      "epoch": 2,
+      "loss": 0.0808,
+      "lr": 4.32e-05
+    },
+    {
+      "step": 100,
+      "epoch": 2,
+      "loss": 0.0895,
+      "lr": 1.839e-05
+    },
+    {
+      "step": 110,
+      "epoch": 2,
+      "loss": 0.0703,
+      "lr": 3.69e-06
+    },
+    {
+      "step": 118,
+      "epoch": 2,
+      "loss": 0.0616,
+      "lr": 0.0
+    }
+  ],
+  "adapter_files": [
+    "adapter_config.json",
+    "adapter_model.safetensors"
+  ],
+  "adapter_total_mib": 38.55,
+  "reload_verified": true
+}

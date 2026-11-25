@@ -1,0 +1,86 @@
+{
+  "elapsed_seconds": 364.64,
+  "results": [
+    {
+      "name": "soup_45c_a0.10",
+      "alpha": 0.1,
+      "firewall_valid": 21,
+      "pub_pass": 10,
+      "all3_pass": 5,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-0edb7ecbb4dd054b",
+        "validation-afa9c2ecf222f328",
+        "validation-162091e91ee345b7"
+      ]
+    },
+    {
+      "name": "soup_45c_a0.20",
+      "alpha": 0.2,
+      "firewall_valid": 21,
+      "pub_pass": 10,
+      "all3_pass": 5,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-0edb7ecbb4dd054b",
+        "validation-afa9c2ecf222f328",
+        "validation-162091e91ee345b7"
+      ]
+    },
+    {
+      "name": "soup_45c_a0.30",
+      "alpha": 0.3,
+      "firewall_valid": 21,
+      "pub_pass": 8,
+      "all3_pass": 4,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-0edb7ecbb4dd054b",
+        "validation-162091e91ee345b7"
+      ]
+    },
+    {
+      "name": "soup_45d_a0.10",
+      "alpha": 0.1,
+      "firewall_valid": 21,
+      "pub_pass": 9,
+      "all3_pass": 5,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-f76a31ffe49ff88d",
+        "validation-0edb7ecbb4dd054b",
+        "validation-162091e91ee345b7"
+      ]
+    },
+    {
+      "name": "soup_45d_a0.20",
+      "alpha": 0.2,
+      "firewall_valid": 21,
+      "pub_pass": 7,
+      "all3_pass": 4,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-0edb7ecbb4dd054b",
+        "validation-162091e91ee345b7"
+      ]
+    },
+    {
+      "name": "soup_45d_a0.30",
+      "alpha": 0.3,
+      "firewall_valid": 21,
+      "pub_pass": 7,
+      "all3_pass": 4,
+      "solved_ids": [
+        "validation-3c4d5ecbd3a4ffc8",
+        "validation-de306200a6efff23",
+        "validation-0edb7ecbb4dd054b",
+        "validation-162091e91ee345b7"
+      ]
+    }
+  ]
+}

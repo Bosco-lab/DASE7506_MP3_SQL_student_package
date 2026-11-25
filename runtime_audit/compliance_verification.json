@@ -1,0 +1,42 @@
+{
+  "split": "test",
+  "n": 240,
+  "correct": 200,
+  "required": 200,
+  "threshold_met": true,
+  "instances_per_question": 3,
+  "case_conjunction_verified": true,
+  "sha256": "68f7fe905eadf5c68a563d698ef1d171052c8104b007731ddc8059dd3fcc34fe",
+  "freeze_files": 70,
+  "adapter_tensor_sha256": "3531f4846929db0abdb2ada4c83cc682f517c512074012d49fc2165968416eb7",
+  "mean_calls": 5.195833333333334,
+  "max_calls": 8,
+  "actions": {
+    "check": 715,
+    "repair_hint": 240,
+    "schema": 240,
+    "submit": 240,
+    "execute": 41,
+    "retrieve": 11
+  },
+  "generation_audit": "test: 96 calls across 91 tasks, 288 completions. Max/task 6, max new tokens/beam 134. 0 tasks exceed six.",
+  "python": "python",
+  "affinity": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "resources": {
+    "predict": {
+      "wall_seconds": 1668.9571742999979,
+      "cpu_seconds_sampled": 3871.046875,
+      "peak_tree_rss_bytes_sampled": 2912051200
+    },
+    "score": {
+      "wall_seconds": 62.078121100003045,
+      "cpu_seconds_sampled": 54.65625,
+      "peak_tree_rss_bytes_sampled": 103165952
+    }
+  }
+}
